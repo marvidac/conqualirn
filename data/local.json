@@ -1,0 +1,51 @@
+{
+	"locais": [
+		{
+			"id": 1,
+			"name": "Local 1"
+		},
+		{
+			"id": 2,
+			"name": "Local 2"
+		},
+		{
+			"id": 3,
+			"name": "Local 3"
+		},
+		{
+			"id": 4,
+			"name": "Local 4"
+		},
+		{
+			"id": 5,
+			"name": "Local 5"
+		},
+		{
+			"id": 6,
+			"name": "Local 6"
+		},
+		{
+			"id": 7,
+			"name": "Local 7"
+		},
+		{
+			"id": 8,
+			"name": "Local 8"
+		}
+		,
+		{
+			"id": 9,
+			"name": "Local 9"
+		}
+		,
+		{
+			"id": 10,
+			"name": "Local 10"
+		}
+		,
+		{
+			"id": 11,
+			"name": "Local 11"
+		}
+	]
+}
