@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import { Text, View, ScrollView } from 'react-native';
-import { Container, Content, Form, Input, Item, Label } from "native-base";
+import { ScrollView, Alert} from 'react-native';
+import { Container, Toast } from 'native-base';
 import { Col, Row, Grid } from 'react-native-easy-grid';
-
 import HeaderCustom from './components/HeaderCustom';
 import ButtonCustom from '../pages/components/ButtonCustom';
 import InputCustom from '../pages/components/Inputcustom';
@@ -11,13 +10,16 @@ import { styles } from '../styles';
 
 export default class LocalForm extends Component {
 
+
   constructor(props) {
     super(props);
 
     this.state = {
-      local: {
+      document: 'local',
+      item: {
         name: ''
       },
+      podeDeletar: false,
     };
   }
 
@@ -26,44 +28,103 @@ export default class LocalForm extends Component {
       && this.props.route.params.item != undefined
     ) {
       this.setState({
-        local: this.props.route.params.item
+        item: this.props.route.params.item,
+        podeDeletar: true,
       })
     }
   }
 
+  createAlert() {
+    Alert.alert(
+      "Deseja Remover?",
+      "",
+      [
+        {
+          text: "Cancel",
+          onPress: () => console.log("Cancel Pressed"),
+        },
+        { text: "OK", onPress: () => {
+          FirebaseService.remove(this.state.document, this.state.item.key);
+          this.props.navigation.goBack();
+        }
+       }
+      ],
+      { cancelable: false }
+    );
+  }
+
   limpaTodos = () => {
     this.setState({
-      local: {
+      item: {
         name: ''
-      }
+      },
+      podeDeletar: false,
     })
   }
 
-  salva = () => {
-    FirebaseService.pushData('local', this.state.local);
+  save = () => {
+    if (this.validar()) {
+      let retorno = FirebaseService.pushData(this.state.document, this.state.item);
+      if (retorno != undefined && (typeof retorno === 'string')) {
+        this.sucessMessage('Dados salvos com sucesso.');
+        this.props.navigation.goBack();
+      } else {
+        this.failMessage('Ocorreu um erro. Tente novamente em alguns instantes.');
+      }
+    } else {
+      this.failMessage('Campo Nome deve ser preenchido.');
+    }
   }
 
-  render() {
-    let conteudo;
+  sucessMessage(texto = '') {
+    Toast.show({
+      text: texto,
+      position: 'center',
+      type: 'success',
+      duration: 2300
+    });
+  }
 
-    if (this.state.local != undefined) {
-      conteudo = <Text>{this.state.local.id}</Text>
-    } else {
-      conteudo = <Text>Nada enviado</Text>
+  failMessage(texto = '') {
+    Toast.show({
+      text: texto,
+      position: 'center',
+      type: 'danger',
+      duration: 2300
+    });
+  }
+
+  validar() {
+    let retorno = true;
+    if (!this.state.item) {
+      retorno = false;
+    } else if (!this.state.item.name) {
+      retorno = false;
     }
+    return retorno;
+  }
+  render() {
     return (
       <Container style={styles.containerScreen}>
         <HeaderCustom
-          iconLeftButton="arrow-back"
+          iconLeftButton="arrow-left"
           functionLeftButton={() => { this.props.navigation.goBack(); }}
+          iconRightButton={this.state.podeDeletar ? "trash" : null}
+          functionRightButton={
+            () => {
+              if (this.state.podeDeletar) {
+                this.createAlert();
+              }
+            }
+          }
           {...this.props} />
         <Grid>
           <Col>
-              <ScrollView>
-                <InputCustom label="Nome" value={this.state.local.name} onChangeText={value => this.setState({ local: { name: value } })} />
-              </ScrollView>
+            <ScrollView>
+              <InputCustom label="Nome" value={this.state.item.name} onChangeText={value => this.setState({ item: { name: value } })} />
+            </ScrollView>
             <Row style={{ height: 50, alignSelf: "center" }}>
-              <ButtonCustom label="Salvar" onPress={()=> { console.log("Salvar") }} />
+              <ButtonCustom label="Salvar" onPress={this.save} />
               <ButtonCustom label="Limpar" onPress={this.limpaTodos} />
             </Row>
           </Col>

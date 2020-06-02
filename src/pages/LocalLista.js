@@ -11,6 +11,7 @@ class LocalLista extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      document: 'local',
       isLoading: true,
       data: [],
       error: null
@@ -20,7 +21,7 @@ class LocalLista extends Component {
   
   componentDidMount() {
     this.setState({ isLoading: true });
-    FirebaseService.getDataList('local', (dataRec) => {
+    FirebaseService.getDataList(this.state.document, (dataRec) => {
       this.setState({
         data: dataRec,
         isLoading: false
@@ -48,7 +49,7 @@ class LocalLista extends Component {
   clickDoAdd = () => {
     this.props.navigation.push("LocalForm");
   }
-
+  
   render() {
     let conteudo;
     if (this.state.isLoading) {

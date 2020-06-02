@@ -19,17 +19,22 @@ export default class ListaDeItens extends Component {
                     data={this.props.itens}
                     renderItem={({ item }) => (
                         <Card>
-                            <TouchableOpacity>
-                                <CardItem>
-                                    <Body>
-
-                                        <Text style={styles.text}>User Name: {item.name}</Text>
-                                    </Body>
-                                    <Right>
-                                        <Icon name="angle-right" style={styles.iconList} size={18} />
-                                    </Right>
-                                </CardItem>
+                            
+                            <TouchableOpacity
+                                onPress={() => {
+                                    this.props.navigation.push(this.props.routeParam, { item: item });
+                                }}
+                            >
+                                    <CardItem>
+                                        <Body>
+                                            <Text style={styles.text}>{item.name}</Text>
+                                        </Body>
+                                        <Right>
+                                            <Icon name="angle-right" style={styles.iconList} size={18} />
+                                        </Right>
+                                    </CardItem>
                             </TouchableOpacity>
+                                
                         </Card>
                     )}
                 />

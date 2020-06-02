@@ -2,26 +2,31 @@ import React from 'react';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import Home from '../Home';
-import { Button } from 'native-base';
+import { Root, Button } from 'native-base';
 import { Icon, Avatar } from 'react-native-elements';
 
 //Routes
 import StackLocalRoutes from './StackLocalRoutes';
+import StackItemRoutes from './StackItemRoutes';
 
 const Drawer = createDrawerNavigator();
 
 export default function App() {
     return (
-        <Drawer.Navigator>
-            <Drawer.Screen name="Controle de Qualidade" component={Home} 
-                options={{ 
-                    title: "Controle de Qualidade",
-                    headerLeft: props => <ButtonHamburgerHome />,
-                    headerRight: props => <AvatarHome />,
-                }}
-            />
-            <Drawer.Screen name="Local" component={StackLocalRoutes} />
-        </Drawer.Navigator>
+        //Root é necessário para que alguns componentes native-base funcionem. Ex: Toast
+        <Root> 
+            <Drawer.Navigator>
+                <Drawer.Screen name="Controle de Qualidade" component={Home}
+                    options={{
+                        title: "Controle de Qualidade",
+                        headerLeft: props => <ButtonHamburgerHome />,
+                        headerRight: props => <AvatarHome />,
+                    }}
+                />
+                <Drawer.Screen name="Local" component={StackLocalRoutes} />
+                <Drawer.Screen name="Item" component={StackItemRoutes} />
+            </Drawer.Navigator>
+        </Root>
     );
 }
 
