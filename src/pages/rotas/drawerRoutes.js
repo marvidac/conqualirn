@@ -8,6 +8,11 @@ import { Icon, Avatar } from 'react-native-elements';
 //Routes
 import StackLocalRoutes from './StackLocalRoutes';
 import StackItemRoutes from './StackItemRoutes';
+import StackFuncionarioRoutes from './StackFuncionarioRoutes';
+import StackFuncaoRoutes from './StackFuncaoRoutes';
+import StackServicoRoutes from './StackServicoRoutes';
+import StackEquipeRoutes from './StackEquipeRoutes';
+import StackInspecaoRoutes from './StackInspecaoRoutes';
 
 const Drawer = createDrawerNavigator();
 
@@ -25,6 +30,11 @@ export default function App() {
                 />
                 <Drawer.Screen name="Local" component={StackLocalRoutes} />
                 <Drawer.Screen name="Item" component={StackItemRoutes} />
+                <Drawer.Screen name="Funcionário" component={StackFuncionarioRoutes} />
+                <Drawer.Screen name="Função" component={StackFuncaoRoutes} />
+                <Drawer.Screen name="Serviço" component={StackServicoRoutes} />
+                <Drawer.Screen name="Equipe" component={StackEquipeRoutes} />
+                <Drawer.Screen name="Inspeção" component={StackInspecaoRoutes} />
             </Drawer.Navigator>
         </Root>
     );

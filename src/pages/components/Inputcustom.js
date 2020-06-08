@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Container, Content, Input, Item, Label } from "native-base";
 
 export default class InputCustom extends Component {
-    constructor(props) {
+    constructor({label='', onChangeText='', ...props}) {
         super(props);
         this.state = {
         };
@@ -21,6 +21,7 @@ export default class InputCustom extends Component {
                     placeholder={this.props.label}
                     value={this.props.value}
                     onChangeText={this.props.onChangeText}
+                    onFocus={this.props.onFocus}
                 />
             </Item>
         );

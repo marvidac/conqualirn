@@ -18,7 +18,7 @@ class ItemLista extends Component {
     };
   }
 
-
+  
   componentDidMount() {
     this.setState({ isLoading: true });
     FirebaseService.getDataList(this.state.document, (dataRec) => {
@@ -27,29 +27,46 @@ class ItemLista extends Component {
         isLoading: false
       })
     })
-  }
+    
 
+    /*api.get('/locais')
+    .then(res => {
+
+      if (res) {
+        const data = res.data;
+        this.setState(
+            {
+              isLoading: false,
+              data: data
+            }
+            );
+            //console.log(this.state.data)
+          }
+          
+        });*/
+    }
+      
   clickDoAdd = () => {
     this.props.navigation.push("ItemForm");
   }
-
+  
   render() {
     let conteudo;
     if (this.state.isLoading) {
       conteudo = <Text>Carregando...</Text>;
     } else {
-      conteudo = <ListaDeItens
-        itens={this.state.data}
-        routeParam="ItemForm"
-        {...this.props}
+      conteudo = <ListaDeItens 
+      itens={this.state.data} 
+      routeParam="ItemForm"
+      {...this.props} 
       />;
     }
     return (
       <Container style={styles.containerScreen}>
-        <HeaderCustom
-          iconRightButton="plus"
-          functionRightButton={this.clickDoAdd}
-          {...this.props} />
+          <HeaderCustom 
+            iconRightButton="plus" 
+            functionRightButton={this.clickDoAdd} 
+            {...this.props} />
         <Content>
           <ScrollView>
             {conteudo}

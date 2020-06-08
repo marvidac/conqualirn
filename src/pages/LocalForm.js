@@ -17,6 +17,7 @@ export default class LocalForm extends Component {
     this.state = {
       document: 'local',
       item: {
+        key: '',
         name: ''
       },
       podeDeletar: false,
@@ -56,6 +57,7 @@ export default class LocalForm extends Component {
   limpaTodos = () => {
     this.setState({
       item: {
+        key: '',
         name: ''
       },
       podeDeletar: false,
@@ -121,7 +123,7 @@ export default class LocalForm extends Component {
         <Grid>
           <Col>
             <ScrollView>
-              <InputCustom label="Nome" value={this.state.item.name} onChangeText={value => this.setState({ item: { name: value } })} />
+              <InputCustom label="Nome" value={this.state.item.name} onChangeText={value => this.setState({ item: { key: this.state.item.key, name: value } })} />
             </ScrollView>
             <Row style={{ height: 50, alignSelf: "center" }}>
               <ButtonCustom label="Salvar" onPress={this.save} />
